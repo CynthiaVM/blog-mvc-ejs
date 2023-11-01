@@ -1,4 +1,4 @@
-## Guia
+## Guia 🪅​
 * Crear carpeta "nombredelproyecto"
 * Ingresar a la carpeta con  ```cd nombredelproyecto```
 * Ejecutar el comando ```npm init -y```
@@ -43,5 +43,5 @@ test-mvc-express/
 		"dev": "nodemon server.ts"
 ```
 
-* Crear repositorio en git con github Desktop
+* Crear repositorio en git con github Desktop 🐱
   
