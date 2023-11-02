@@ -26,7 +26,7 @@
 
 * Crear estructara 
 ```
-test-mvc-express/
+blog-mvc-ejs/
   ├─ src/
   │   ├─ controllers/
   │   ├─ views/
@@ -44,4 +44,6 @@ test-mvc-express/
 ```
 
 * Crear repositorio en git con github Desktop 🐱
+
+* Ejecutar docker-compose up -d
   
