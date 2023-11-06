@@ -1,10 +1,22 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
+//import "reflect-metadata";
+import { dbcontext } from './src/db/dbcontext';
+import { TypeORMError } from 'typeorm';
+import logger from './src/Helpers/logger';
+
 
 dotenv.config();
-
 const app = express();
+
+
+dbcontext
+.initialize()
+.then(() => {})
+.catch((err: TypeORMError) => {
+	logger.error(`Error al iniciar la base de datos: ${err.message}`); // si hay error
+});
 
 //Configurar EJS
 
