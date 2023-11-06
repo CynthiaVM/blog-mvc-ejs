@@ -47,3 +47,7 @@ blog-mvc-ejs/
 
 * Ejecutar docker-compose up -d
   
+###Intalacion de TipeORM
+npm install typeorm --save
+npm install reflect-metadata --save
+npm install mysql2 --save
