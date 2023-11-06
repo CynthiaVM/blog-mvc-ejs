@@ -4,7 +4,7 @@ import path from 'path';
 //import "reflect-metadata";
 import { dbcontext } from './src/db/dbcontext';
 import { TypeORMError } from 'typeorm';
-import logger from './src/Helpers/logger';
+import logger from './src/helpers/logger';
 
 
 dotenv.config();
