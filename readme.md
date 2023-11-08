@@ -53,3 +53,8 @@ npm install reflect-metadata --save
 npm install mysql2 --save
 
 ##Crear Logger
+
+##Crear: noticias.entity - usuarios.entity - comentarios.entity
+importar: npm install bcrypt
+          npm i uuid        
+
