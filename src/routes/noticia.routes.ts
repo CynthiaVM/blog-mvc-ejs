@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express from "express";
 
 const noticiaRoutes=express.Router();
 
