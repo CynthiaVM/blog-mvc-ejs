@@ -48,13 +48,19 @@ blog-mvc-ejs/
 * Ejecutar docker-compose up -d
   
 ###Intalacion de TipeORM
-npm install typeorm --save
-npm install reflect-metadata --save
-npm install mysql2 --save
+* npm install typeorm --save
+* npm install reflect-metadata --save
+* npm install mysql2 --save
 
 ##Crear Logger
 
 ##Crear: noticias.entity - usuarios.entity - comentarios.entity
-importar: npm install bcrypt
-          npm i uuid        
 
+##importar: 
+
+* npm install bcrypt
+* npm i uuid        
+
+##Loggin Sessiones
+* npm install express-session@1.17.0 cookie-parser
+* npm i --save-dev @types/express-session @types/cookie-parser 
