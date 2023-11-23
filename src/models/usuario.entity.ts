@@ -8,10 +8,10 @@ import { Column,
 	 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { Noticia } from '../models/noticia.entity';
-import { before } from 'node:test';
+
 
 @Entity() //decorador agregando detalles
-export class usuarios { //propiedad que va a tener 
+export class Usuarios { //propiedad que va a tener 
 	@PrimaryGeneratedColumn('uuid') //dice que sera una primarykey (identificador unico)
 	id?: string; //el signo de pregunta es por que puede o no venir
 
