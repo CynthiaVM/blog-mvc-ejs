@@ -7,7 +7,7 @@ import { Column,
 	ManyToOne } from 'typeorm';
 
 import { Comentario } from '../models/comentario.entity';
-import { usuarios } from '../models/usuario.entity';
+import { Usuarios } from '../models/usuario.entity';
 
 @Entity() //decorador agregando detalles
 export class Noticia { //propiedad que va a tener la noticia
@@ -31,7 +31,7 @@ export class Noticia { //propiedad que va a tener la noticia
 	//@OneToMany(() => Comentario, (c) => c.noticia)
 	//comentarios: Comentario[];  //sino lo tengo no podria tener los comentarios 
 
-    //@ManyToOne(() => usuarios, (u) => u.noticias, { nullable: false })
-    //usuario: usuarios;
+    //@ManyToOne(() => Usuarios, (u) => u.noticias, { nullable: false })
+   //usuario: Usuarios;
 
 }
