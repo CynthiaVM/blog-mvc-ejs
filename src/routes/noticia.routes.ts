@@ -1,11 +1,12 @@
-import express from "express";
+import express from 'express';
+import {
+	noticiasIndex,
+	crearNoticiaView,
+} from '../controllers/noticias.controller';
 
-const noticiaRoutes=express.Router();
+const noticiasRoutes = express.Router();
 
-noticiaRoutes.get('/', (_req, res)=> {
-    const nombre= 'Nuriel';
-    res.render('home/index', {nombre});
-});
+noticiasRoutes.get('/', noticiasIndex);
+noticiasRoutes.get('/crear', crearNoticiaView);
 
-export default noticiaRoutes;
-
+export default noticiasRoutes;
