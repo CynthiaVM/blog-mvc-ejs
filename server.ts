@@ -1,5 +1,5 @@
+import express, { Request, Response } from 'express';
 import 'dotenv/config';
-import express from 'express';
 import path from 'path';
 import { dbcontext } from './src/db/dbcontext';
 import { TypeORMError } from 'typeorm';
@@ -10,6 +10,9 @@ import authRoutes from './src/routes/auth.routes';
 import expressLayouts from 'express-ejs-layouts';
 import noticiaRoutes from './src/routes/noticia.routes';
 const app = express();
+//para recibir la info de crear
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 dbcontext
 	.initialize()
@@ -41,33 +44,9 @@ const port = process.env.PORT || 2000;
 
 app.use('/noticias', noticiaRoutes);
 app.use('/auth', authRoutes);
-
-
-// Ruta de inicio de sesión
-//app.get('/login', (req, res) => {
-//	if (req.session) {
-		//Logica de login para usuario
-//		req.session.user = { id: 1, username: 'Cintia' };
-//	}
-
-//	res.send('Inicio de sesión exitoso.');
-//});
-//Me muestra quien ingreso 
-//app.get('/QuienSoy', (req, res) => {
-	//if (req.session?.user) {
-		//res.send(req.session.user);
-		//}
-		//else{
-			//res.send('No estas logueado');
-		//}
-	//});
-//app.get('/Logout', (req, res) => {
-//		req.session?.destroy((err)=> {
-//			console.log(err);
-//		}); 
-//		res.send('Session cerrada correctamente');
-//	});
-
+app.use('/', (req: Request, res: Response) => {
+	res.redirect('/noticias');
+});
 
 app.listen(port, () => {
 	console.log(`Servidor Express funcionando en http://localhost:${port} 🌈​✅`);
