@@ -27,6 +27,7 @@ export class Noticia { //propiedad que va a tener la noticia
     update_at: Date;
     comentarios: any;
     usuario: any;
+	static usuario: { id: string; };
 
 	//@OneToMany(() => Comentario, (c) => c.noticia)
 	//comentarios: Comentario[];  //sino lo tengo no podria tener los comentarios 
