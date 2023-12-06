@@ -35,19 +35,18 @@ app.use(
 
 //Configurar EJS
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src/views'));
+//EJS layouts
 app.use(expressLayouts);
-app.set('views', path.join(__dirname, 'src', 'views'));
-app.set('layout', path.join(__dirname, 'src', 'views', 'shared', 'layout'));
-
-
-const port = process.env.PORT || 2000;
-
+app.set('layout', path.join(__dirname, 'src/views/shared/layout'));
+//Rutas
 app.use('/noticias', noticiaRoutes);
 app.use('/auth', authRoutes);
 app.use('/', (req: Request, res: Response) => {
 	res.redirect('/noticias');
 });
 
+const port = process.env.PORT || 2000;
 app.listen(port, () => {
 	console.log(`Servidor Express funcionando en http://localhost:${port} 🌈​✅`);
 });
