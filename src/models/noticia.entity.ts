@@ -1,10 +1,13 @@
-import { Column,
-	CreateDateColumn, 
-	Entity, 
-	PrimaryGeneratedColumn, 
-	UpdateDateColumn, 
-	OneToMany, 
-	ManyToOne } from 'typeorm';
+import {
+	Column,
+	CreateDateColumn,
+	DeleteDateColumn,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm';
 
 import { Comentario } from '../models/comentario.entity';
 import { Usuarios } from '../models/usuario.entity';
@@ -17,7 +20,7 @@ export class Noticia { //propiedad que va a tener la noticia
 	@Column() //decorador
 	titulo: string;
 
-	@Column()
+	@Column({ length: 1000 })
 	contenido: string;
 
 	@CreateDateColumn()
@@ -25,14 +28,14 @@ export class Noticia { //propiedad que va a tener la noticia
 
     @UpdateDateColumn()
     update_at: Date;
-    comentarios: any;
-    usuario: any;
-	static usuario: { id: string; };
+    //comentarios: any;
+    //usuario: any;
+	//static usuario: { id: string; };
 
-	//@OneToMany(() => Comentario, (c) => c.noticia)
-	//comentarios: Comentario[];  //sino lo tengo no podria tener los comentarios 
+	@OneToMany(() => Comentario, (c) => c.noticia)
+	comentarios: Comentario[];  //sino lo tengo no podria tener los comentarios 
 
-    //@ManyToOne(() => Usuarios, (u) => u.noticias, { nullable: false })
-   //usuario: Usuarios;
+    @ManyToOne(() => Usuarios, (u) => u.noticias, { nullable: true })
+    usuario: Usuarios;
 
 }
