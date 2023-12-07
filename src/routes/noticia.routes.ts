@@ -8,9 +8,15 @@ import {
 
 const noticiasRoutes = express.Router();
 
-noticiasRoutes.get('/detalle/:id', mostrarDetalleNoticia);
 noticiasRoutes.get('/', noticiasIndex);
+noticiasRoutes.get('/detalle/:id', mostrarDetalleNoticia);
+
+//crear
 noticiasRoutes.get('/crear', crearNoticiaView);
 noticiasRoutes.post('/crear', crearNoticia);
+//editar
+//noticiasRoutes.get('/editar/:idNoticia', editarNoticiaView);
+//noticiasRoutes.get('/editar/:idNoticia', editarNoticia);
+
 
 export default noticiasRoutes;
