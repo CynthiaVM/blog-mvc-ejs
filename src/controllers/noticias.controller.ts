@@ -32,7 +32,7 @@ export const crearNoticia = async (req: Request, res: Response) => {
     const data: Inoticias_create = req.body;
 
 	try {
-		if (!data.titulo || !data.contenido || data.titulo.trim() === '' || data.contenido.trim() === '') {
+		if (!data.titulo || !data.contenido || data.titulo.trim() == '' || data.contenido.trim() == '') {
             throw new Error('El título o el contenido está vacío');
         }
 		const noticiaRepository = dbcontext.getRepository(Noticia);
