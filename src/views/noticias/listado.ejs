@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% noticias.forEach(n=> { %>
+            <tr>
+                <td>
+                    <%= n.id %>
+                </td>
+                <td style="font-family: 'Comic Sans MS', cursive; font-size: 20px; color: #333;">
+                    <%= n.titulo %>
+                </td>
+                <td>
+                    <a href="/noticias/editar/<%= n.id %>">✏</a>
+                    <a href="/noticias/borrar/<%= n.id %>">🗑️</a>
+                    <% if (n.deleted_at) { %>
+                        <a href="/noticias/restore/<%= n.id %>">♻</a>
+                    <% } %>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
