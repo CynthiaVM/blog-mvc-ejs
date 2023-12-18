@@ -8,9 +8,8 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-
-import { Comentario } from '../models/comentario.entity';
-import { Usuarios } from '../models/usuario.entity';
+import { Comentario } from './comentario.entity';
+import { Usuarios } from './usuario.entity';
 
 @Entity() //decorador agregando detalles
 export class Noticia { //propiedad que va a tener la noticia
@@ -23,6 +22,9 @@ export class Noticia { //propiedad que va a tener la noticia
 	@Column({ length: 1000 })
 	contenido: string;
 
+	@Column({ nullable: true })
+    imagen: string; // se puede usar un tipo específico dependiendo como almacenar las imágenes
+
 	@CreateDateColumn()
 	create_at: Date;
 
@@ -31,6 +33,9 @@ export class Noticia { //propiedad que va a tener la noticia
     //comentarios: any;
     //usuario: any;
 	//static usuario: { id: string; };
+
+	@DeleteDateColumn()
+	deleted_at: Date;
 
 	@OneToMany(() => Comentario, (c) => c.noticia)
 	comentarios: Comentario[];  //sino lo tengo no podria tener los comentarios 
