@@ -15,8 +15,9 @@ export class Usuarios { //propiedad que va a tener
 	@PrimaryGeneratedColumn('uuid') //dice que sera una primarykey (identificador unico)
 	id?: string; //el signo de pregunta es por que puede o no venir
 
-	@Column({ unique: true }) //unico
-	email: string;
+	@Column({ unique: true })
+     email: string;
+
 
 	@Column()
 	pass: string;
