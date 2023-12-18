@@ -9,10 +9,15 @@ import session from 'express-session';
 import authRoutes from './src/routes/auth.routes';
 import expressLayouts from 'express-ejs-layouts';
 import noticiaRoutes from './src/routes/noticia.routes';
+import usuarioRoutes from './src/routes/usuarios.routes';
+import { Usuarios } from "./src/models/usuario.entity";
 const app = express();
 //para recibir la info de crear
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 dbcontext
 	.initialize()
@@ -41,10 +46,13 @@ app.use(expressLayouts);
 app.set('layout', path.join(__dirname, 'src/views/shared/layout'));
 //Rutas
 app.use('/noticias', noticiaRoutes);
+app.use('/usuarios', usuarioRoutes);
 app.use('/auth', authRoutes);
 app.use('/', (req: Request, res: Response) => {
 	res.redirect('/noticias');
 });
+
+
 
 const port = process.env.PORT || 2000;
 app.listen(port, () => {
