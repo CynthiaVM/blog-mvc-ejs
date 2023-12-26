@@ -64,3 +64,18 @@ blog-mvc-ejs/
 ##Loggin Sessiones
 * npm install express-session@1.17.0 cookie-parser
 * npm i --save-dev @types/express-session @types/cookie-parser 
+
+##instalaciones para compilar
+* npm install --save-dev rimraf
+para crear en el packege.json 
+*  "scripts": {
+    "start": "node dist/server.js",
+    "clean": "rimraf dist", ** npm run clean: borra el dist
+    "tsc": "tsc",
+    "copy-assets": "ts-node src/tools/copy-build-view.ts",
+    "build": "npm run clean & npm run tsc & npm run copy-assets",
+    "dev": "nodemon dist/server.js"
+  },
+  * npm install --save-dev @types/shelljs shelljs
+  * npm run tsc / npm run clean / npm run copy-assets/ 
+  * npm run build: aplica/compila los tres pasos
