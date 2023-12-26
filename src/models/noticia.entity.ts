@@ -9,7 +9,7 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 import { Comentario } from './comentario.entity';
-import { Usuarios } from './usuario.entity';
+import { Usuarios } from './usuarios.entity';
 
 @Entity() //decorador agregando detalles
 export class Noticia { //propiedad que va a tener la noticia
@@ -44,3 +44,5 @@ export class Noticia { //propiedad que va a tener la noticia
     usuario: Usuarios;
 
 }
+
+export { Usuarios };
