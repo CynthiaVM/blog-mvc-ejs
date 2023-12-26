@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import * as dotenv from 'dotenv';
 
 export const dbcontext = new DataSource({
 	type: 'mariadb',
