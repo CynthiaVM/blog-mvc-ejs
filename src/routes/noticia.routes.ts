@@ -1,3 +1,4 @@
+
 import express, { Router } from 'express';
 import multer from 'multer';  
 import {
@@ -10,9 +11,11 @@ import {
   listadoNoticias,
   borrarNoticia,
 } from '../controllers/noticias.controller';
+import { authMiddleware } from '../middlewares/auth.middleware';
 
 const noticiasRoutes = express.Router();
 
+//diferente a Nacho
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/');
@@ -28,15 +31,15 @@ noticiasRoutes.get('/', noticiasIndex);
 noticiasRoutes.get('/by/:idNoticia', getNoticiaById);
 
 // Listado
-noticiasRoutes.get('/listado', listadoNoticias);
+noticiasRoutes.get('/listado', authMiddleware, listadoNoticias);
 //crear
-noticiasRoutes.get('/crear', crearNoticiaView);
-noticiasRoutes.post('/crear', upload.single('imagen'), crearNoticia); // Utilizo 'upload' aca
+noticiasRoutes.get('/crear', authMiddleware, crearNoticiaView);
+noticiasRoutes.post('/crear', upload.single('imagen'),authMiddleware, crearNoticia); // Utilizo 'upload' aca, distinto a Nacho
 //editar
-noticiasRoutes.get('/editar/:idNoticia', editarNoticiaView);
-noticiasRoutes.get('/editar/:idNoticia', editarNoticia);
+noticiasRoutes.get('/editar/:idNoticia', authMiddleware, editarNoticiaView);
+noticiasRoutes.post('/editar/:idNoticia', authMiddleware, editarNoticia);
 //delete
-noticiasRoutes.get('/borrar/:idNoticia', borrarNoticia);
+noticiasRoutes.get('/borrar/:idNoticia', authMiddleware, borrarNoticia);
 
 export default noticiasRoutes;
 
