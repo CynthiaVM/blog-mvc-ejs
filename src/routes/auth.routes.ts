@@ -1,13 +1,18 @@
 import express from 'express';
-import { loginController, logoutController } from '../controllers/auth.controller';
-import { mostrarUsuarios } from '../controllers/usuarios.controller';
+import { loginController,
+	loginControllerView,
+	logoutController,
+	quiensoyController,} from '../controllers/auth.controller';
+//import { mostrarFormularioRegistro } from '../controllers/usuarios.controller';
 
 const authRoutes = express.Router();
 
-// Rutas de ejemplo de sesiones
-authRoutes.get('/login', loginController);
+// rutas de ejemplo de sessiones
+authRoutes.get('/login', loginControllerView);
+authRoutes.post('/login', loginController);
+
+authRoutes.get('/quiensoy', quiensoyController);
+
 authRoutes.get('/logout', logoutController);
-// Ruta para mostrar la lista de usuarios
-authRoutes.get('/Usuarios', mostrarUsuarios);
 
 export default authRoutes;
