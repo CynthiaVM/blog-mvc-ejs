@@ -1,41 +1,155 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { Usuarios } from '../models/usuario.entity';
 
-export const mostrarUsuarios = async (req: Request, res: Response) => {
-  try {
-    const usuarioRepository = getRepository(Usuarios);
-    const usuarios = await usuarioRepository.find();
+import { dbcontext } from '../db/dbcontext';
+import { Usuarios } from '../models/usuarios.entity';
+import bcrypt from 'bcrypt';
+import {
+	IUsuarios_create,
+	IUsuarios_update,
+} from '../interfaces/usuarios/usuarios.interfaces';
 
-    res.render('usuarios', { usuarios });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al obtener la lista de usuarios');
-  }
+export const listadoUsuarios = async (req: Request, res: Response) => {
+	try {
+		const usuarioRepository = await dbcontext.getRepository(Usuarios);
+		const usuario = req.body.usuario; // || {}; //lo modifique pr que me tiraba error al no reconocer usuario
+		const usuarios = await usuarioRepository.find({
+			order: {
+				create_at: 'DESC',
+			},
+			withDeleted: true,
+		});
+		res.render('usuarios/listado', { usuarios, usuario });
+	} catch (error) {}
 };
 
-export const mostrarFormularioRegistro = (req: Request, res: Response) => {
-  res.render('registro'); // Renderiza el formulario de registro
+export const crearUsuarioView = async (req: Request, res: Response) => {
+	try {
+		const usuario = req.body.usuario;// || {};
+		res.render('usuarios/crear', { usuario});
+	} catch (error) {}
 };
 
-export const registrarUsuario = async (req: Request, res: Response) => {
-  const { nombre, apellido, email, contraseña } = req.body;
-
-  // Validaciones y verificaciones aquí
-
-  const usuarioRepository = getRepository(Usuarios); 
-
-  // Crea un nuevo usuario
-  const nuevoUsuario = usuarioRepository.create({
-    nombre,
-    apellido,
-    email,
-    pass: contraseña, 
-  });
-
-  // Guarda el nuevo usuario en la base de datos
-  await usuarioRepository.save(nuevoUsuario);
-
-  res.redirect('/login'); // Redirige al usuario después de registrarse
+export const crearUsuario = async (req: Request, res: Response) => {
+	try {
+		const data: IUsuarios_create = req.body;
+		//const usuario = req.body.usuario //|| {};
+		if (data.pass !== data.pass2) {
+			res.render('shared/error');
+			throw new Error('Contraseñas no coinciden');
+		}
+		const usuarioRepository = await dbcontext.getRepository(Usuarios);
+		const usuario = await usuarioRepository.create({ //modidique usuario por usuarioEntity
+			...data,
+		});
+		const result = await usuarioRepository.save(usuario);//modidique usuario por usuarioEntity y no funco
+		res.status(200).redirect('/usuarios/listado');
+	} catch (error) {
+		console.error(error);
+		res.render('shared/error', { msgError: 'Error al crear el usuario' });
+	}
 };
 
+export const editarUsuarioView = async (req: Request, res: Response) => {
+	try {
+		const idUsuario = req.params.idUsuario;
+
+		const noticiaRepository = dbcontext.getRepository(Usuarios);
+		
+		const usuario = await noticiaRepository.findOne({
+			where: {
+				id: idUsuario,
+			},
+		});
+		if (!usuario) {
+			res.render('shared/error', { msgError: 'El usuario no existe' });
+		}
+		res.render('usuarios/editar', { usuario });
+	} catch (error) {
+		res.render('shared/error', { msgError: 'Error al editar el usuario' });
+	}
+};
+
+export const editarUsuario = async (req: Request, res: Response) => {
+	try {
+		const data: IUsuarios_update = req.body;
+		if (data.pass !== data.pass2) {
+			return res.render('shared/error', {
+				msgError: 'Las contraseñas no coinciden',
+			});
+		}
+		const usuarioRepository = await dbcontext.getRepository(Usuarios);
+		const usuario = await usuarioRepository.exist({
+			where: {
+				id: req.params.idUsuario,
+			},
+		});
+		if (!usuario) {
+			res.render('shared/error', { msgError: 'El usuario no existe' });
+		}
+
+		// // Comparacion pw
+		// const usuarioAComparar = await usuarioRepository.findOneBy({
+		// 	id: req.params.idUsuario,
+		// });
+		// if (usuarioAComparar) {
+		// 	const comparacion = await bcrypt.compare(
+		// 		req.body.password,
+		// 		usuarioAComparar.password
+		// 	);
+		// 	if (comparacion) {
+		// 		const editarUsuario: IUsuarios_update = {
+		// 			nombre: req.body.nombre,
+		// 			apellido: req.body.apellido,
+		// 		};
+		// 		await usuarioRepository.update(req.params.idUsuario, editarUsuario);
+		// 	} else {
+		// 		console.log('contraseña incorrecta')
+		// 		res.render('shared/error');
+		// 	}
+		// }
+
+	const editarUsuario: IUsuarios_update = {
+			nombre: req.body.nombre,
+			apellido: req.body.apellido,
+		};
+		await usuarioRepository.update(req.params.idUsuario, editarUsuario);
+		res.status(200).redirect('/usuarios/listado');
+	} catch (error) {
+		console.log(error);
+		res.render('shared/error', { msgError: 'Error al editar el usuario' });
+	}
+};
+
+export const eliminarUsuario = async (req: Request, res: Response) => {
+	try {
+		const idUsuario = req.params.idUsuario;
+		const usuarioRepository = await dbcontext.getRepository(Usuarios);
+		const usuario = await usuarioRepository.findOne({
+			where: {
+				id: idUsuario,
+			},
+		});
+		if (!usuario) {
+			res.render('shared/error', {
+				msgError: 'No se pudo encontrar el usuario',
+			});
+		}
+		await usuarioRepository.softDelete(idUsuario);
+		res.redirect('/usuarios/listado');
+	} catch (error) {
+		console.log(error);
+		res.render('shared/error', { msgError: 'Error al eliminar el usuario' });
+	}
+};
+
+export const recuperarUsuario = async (req: Request, res: Response) => {
+	try {
+		const idUsuario = req.params.idUsuario;
+		const noticiaRepository = await dbcontext.getRepository(Usuarios);
+		await noticiaRepository.restore(idUsuario);
+		res.redirect('/usuarios/listado');
+	} catch (error) {
+		console.log(error);
+		res.render('shared/error', { msgError: 'Error al recuperar el usuario' });
+	}
+};
