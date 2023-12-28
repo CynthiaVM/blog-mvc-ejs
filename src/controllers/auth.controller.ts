@@ -37,7 +37,7 @@ export const loginController = async (req: Request, res: Response) => {
 		}
 	} catch (error) {
 		console.log(error);
-		res.render('shared/error', { msgError: error });
+		res.render('shared/error', { msgError: error,usuario:{}  });
 	}
 
 	// existe el email ?
