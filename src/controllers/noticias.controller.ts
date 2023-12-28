@@ -21,7 +21,7 @@ export const noticiasIndex = async (req: Request, res: Response) => {
         where: { deleted_at: IsNull() },
 	});
 
-	res.render('home/index_view_noticias', { noticias });
+	res.render('home/index_view_noticias', { noticias,usuario:{}  });
 
 };
 
