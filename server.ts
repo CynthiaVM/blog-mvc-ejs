@@ -43,7 +43,7 @@ app.set('layout', path.join(__dirname, 'src/views/shared/layout'));
 
 const port = process.env.PORT || 2000;
 
-app.use('/noticias', noticiasRoutes);
+app.use('/noticias', noticiasRoutes);//cambi use por get
 app.use('/usuarios', usuariosRoutes);
 app.use('/auth', authRoutes);
 
