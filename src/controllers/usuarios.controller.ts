@@ -45,7 +45,7 @@ export const crearUsuario = async (req: Request, res: Response) => {
 		res.status(200).redirect('/usuarios/listado');
 	} catch (error) {
 		console.error(error);
-		res.render('shared/error', { msgError: 'Error al crear el usuario' });
+		res.render('shared/error', { msgError: 'Error al crear el usuario',usuario:{} });
 	}
 };
 
@@ -61,11 +61,11 @@ export const editarUsuarioView = async (req: Request, res: Response) => {
 			},
 		});
 		if (!usuario) {
-			res.render('shared/error', { msgError: 'El usuario no existe' });
+			res.render('shared/error', { msgError: 'El usuario no existe',usuario:{} });
 		}
 		res.render('usuarios/editar', { usuario });
 	} catch (error) {
-		res.render('shared/error', { msgError: 'Error al editar el usuario' });
+		res.render('shared/error', { msgError: 'Error al editar el usuario' ,usuario:{} });
 	}
 };
 
@@ -74,7 +74,7 @@ export const editarUsuario = async (req: Request, res: Response) => {
 		const data: IUsuarios_update = req.body;
 		if (data.pass !== data.pass2) {
 			return res.render('shared/error', {
-				msgError: 'Las contraseñas no coinciden',
+				msgError: 'Las contraseñas no coinciden',usuario:{} 
 			});
 		}
 		const usuarioRepository = await dbcontext.getRepository(Usuarios);
@@ -84,7 +84,7 @@ export const editarUsuario = async (req: Request, res: Response) => {
 			},
 		});
 		if (!usuario) {
-			res.render('shared/error', { msgError: 'El usuario no existe' });
+			res.render('shared/error', { msgError: 'El usuario no existe',usuario:{}  });
 		}
 
 		// // Comparacion pw
@@ -116,7 +116,7 @@ export const editarUsuario = async (req: Request, res: Response) => {
 		res.status(200).redirect('/usuarios/listado');
 	} catch (error) {
 		console.log(error);
-		res.render('shared/error', { msgError: 'Error al editar el usuario' });
+		res.render('shared/error', { msgError: 'Error al editar el usuario' ,usuario:{} });
 	}
 };
 
@@ -131,14 +131,14 @@ export const eliminarUsuario = async (req: Request, res: Response) => {
 		});
 		if (!usuario) {
 			res.render('shared/error', {
-				msgError: 'No se pudo encontrar el usuario',
+				msgError: 'No se pudo encontrar el usuario',usuario:{} 
 			});
 		}
 		await usuarioRepository.softDelete(idUsuario);
 		res.redirect('/usuarios/listado');
 	} catch (error) {
 		console.log(error);
-		res.render('shared/error', { msgError: 'Error al eliminar el usuario' });
+		res.render('shared/error', { msgError: 'Error al eliminar el usuario',usuario:{}  });
 	}
 };
 
@@ -150,6 +150,6 @@ export const recuperarUsuario = async (req: Request, res: Response) => {
 		res.redirect('/usuarios/listado');
 	} catch (error) {
 		console.log(error);
-		res.render('shared/error', { msgError: 'Error al recuperar el usuario' });
+		res.render('shared/error', { msgError: 'Error al recuperar el usuario',usuario:{} });
 	}
 };
